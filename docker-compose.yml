@@ -1,0 +1,24 @@
+version: '3'
+services:
+  react_docker:
+    stdin_open: true # this is because of https://stackoverflow.com/questions/60790696/react-scripts-start-exiting-in-docker-foreground-cmd
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:3000"
+    volumes:
+      - /react/app/node_modules
+      - .:/react/app
+  react_docker_tests:
+    stdin_open: true # this is because of https://stackoverflow.com/questions/60790696/react-scripts-start-exiting-in-docker-foreground-cmd
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /react/app/node_modules
+      - .:/react/app
+    command: ["npm", "test"]      
+
+#  it will not find dockerfile since it is dev
+
